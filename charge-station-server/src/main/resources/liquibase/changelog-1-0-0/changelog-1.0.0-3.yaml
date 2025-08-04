@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: ismetyldrm
+      changes:
+        - sql:
+            splitStatements: false
+            sql: |
+              CREATE TYPE connector_current_type AS ENUM ('AC', 'DC');
+              CREATE TYPE connector_status AS ENUM ('Available', 'Preparing', 'Charging', 'SuspendedEVSE', 'SuspendedEV', 'Finishing', 'Reserved', 'Unavailable', 'Faulted');
+
+  - changeSet:
+      id: 4
+      author: ismetyldrm
+      changes:
+        - createTable:
+            tableName: connector
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: charge_point_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_connector_charge_point_id
+                    references: charge_point(id)
+              - column:
+                  name: index
+                  type: INTEGER
+              - column:
+                  name: current_type
+                  type: connector_current_type
+              - column:
+                  name: power_factor
+                  type: DECIMAL(5,2)
+              - column:
+                  name: status
+                  type: connector_status

@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: ismetyldrm
+      changes:
+        - sql:
+            splitStatements: false
+            sql: |
+              CREATE TYPE charge_station_type AS ENUM ('PUBLIC', 'PRIVATE');
+
+  - changeSet:
+      id: 2
+      author: ismetyldrm
+      changes:
+        - createTable:
+            tableName: charge_station
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: type
+                  type: charge_station_type
+              - column:
+                  name: parking_slots
+                  type: INTEGER
+              - column:
+                  name: country
+                  type: VARCHAR(100)
+              - column:
+                  name: city
+                  type: VARCHAR(100)
+              - column:
+                  name: state
+                  type: VARCHAR(100)
+              - column:
+                  name: district
+                  type: VARCHAR(100)
+              - column:
+                  name: postcode
+                  type: VARCHAR(20)
+              - column:
+                  name: address
+                  type: VARCHAR(255)
+              - column:
+                  name: latitude
+                  type: DECIMAL(10,7)
+              - column:
+                  name: longitude
+                  type: DECIMAL(10,7)

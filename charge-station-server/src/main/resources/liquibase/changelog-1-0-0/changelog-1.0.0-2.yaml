@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: ismetyldrm
+      changes:
+        - createTable:
+            tableName: charge_point
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: charge_station_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_charge_point_charge_station_id
+                    references: charge_station(id)
+              - column:
+                  name: ocpp_id
+                  type: VARCHAR(100)
+              - column:
+                  name: disabled
+                  type: BOOLEAN
+              - column:
+                  name: online
+                  type: BOOLEAN
+              - column:
+                  name: last_connected
+                  type: TIMESTAMP
+              - column:
+                  name: last_disconnected
+                  type: TIMESTAMP
+              - column:
+                  name: last_health_checked
+                  type: TIMESTAMP
