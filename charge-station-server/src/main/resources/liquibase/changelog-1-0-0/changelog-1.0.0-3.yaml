@@ -39,3 +39,18 @@ databaseChangeLog:
               - column:
                   name: status
                   type: connector_status
+              - column:
+                  name: version
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                        name: created
+                        type: TIMESTAMP WITH TIME ZONE
+                        constraints:
+                          nullable: false
+              - column:
+                        name: updated
+                        type: TIMESTAMP WITH TIME ZONE
+                        constraints:
+                          nullable: false

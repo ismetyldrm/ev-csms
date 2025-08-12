@@ -21,6 +21,11 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
+                  name: version
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
                   name: name
                   type: VARCHAR(255)
               - column:
@@ -53,3 +58,13 @@ databaseChangeLog:
               - column:
                   name: longitude
                   type: DECIMAL(10,7)
+              - column:
+                  name: created
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
+              - column:
+                   name: updated
+                   type: TIMESTAMP WITH TIME ZONE
+                   constraints:
+                    nullable: false
