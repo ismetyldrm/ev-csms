@@ -1,0 +1,77 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: ismetyldrm
+      changes:
+        - sql:
+            splitStatements: false
+            sql: |
+              CREATE TYPE reservation_status AS ENUM ('ACTIVE', 'COMPLETED', 'CANCELED', 'FAILED');
+
+  - changeSet:
+      id: 2
+      author: ismetyldrm
+      changes:
+        - createTable:
+            tableName: reservation
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: connector_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    references: connector(id)
+                    foreignKeyName: fk_reservation_connector
+                    onDelete: CASCADE
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_reservation_user
+                    onDelete: CASCADE
+              - column:
+                  name: vehicle_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    references: vehicle(id)
+                    foreignKeyName: fk_reservation_vehicle
+                    onDelete: CASCADE
+              - column:
+                  name: begin_time
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_time
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: reservation_status
+                  constraints:
+                    nullable: false
+              - column:
+                  name: version
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                        name: created
+                        type: TIMESTAMP WITH TIME ZONE
+                        constraints:
+                          nullable: false
+              - column:
+                        name: updated
+                        type: TIMESTAMP WITH TIME ZONE
+                        constraints:
+                          nullable: false

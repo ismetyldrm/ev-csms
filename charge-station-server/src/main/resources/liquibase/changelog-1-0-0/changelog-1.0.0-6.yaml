@@ -1,0 +1,94 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: ismetyldrm
+      changes:
+        - sql:
+            splitStatements: false
+            sql: |
+              CREATE TYPE charging_session_status AS ENUM ('NEW', 'ACTIVE', 'COMPLETED', 'CANCELED', 'FAILED');
+              CREATE TYPE charging_session_reason AS ENUM ('EmergencyStop', 'EVDisconnected', 'HardReset', 'Local', 'Other', 'PowerLoss', 'Reboot', 'Remote', 'SoftReset', 'UnlockCommand', 'DeAuthorized');
+
+  - changeSet:
+      id: 2
+      author: ismetyldrm
+      changes:
+        - createTable:
+            tableName: charging_session
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: reservation_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    references: reservation(id)
+                    foreignKeyName: fk_charging_session_reservation
+                    onDelete: CASCADE
+              - column:
+                  name: status
+                  type: charging_session_status
+                  constraints:
+                    nullable: false
+              - column:
+                  name: begin_time
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_time
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  name: unplug_time
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  name: meter_start
+                  type: INTEGER
+              - column:
+                  name: curr_meter
+                  type: INTEGER
+              - column:
+                  name: meter_stop
+                  type: INTEGER
+              - column:
+                  name: unit
+                  type: VARCHAR(20)
+              - column:
+                  name: consumption
+                  type: DECIMAL(19,4)
+              - column:
+                  name: active_power
+                  type: DECIMAL(19,4)
+              - column:
+                  name: active_power_unit
+                  type: VARCHAR(20)
+              - column:
+                  name: battery_percentage
+                  type: VARCHAR(10)
+              - column:
+                  name: battery_percentage_start
+                  type: VARCHAR(10)
+              - column:
+                  name: reason
+                  type: charging_session_reason
+              - column:
+                  name: version
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                        name: created
+                        type: TIMESTAMP WITH TIME ZONE
+                        constraints:
+                          nullable: false
+              - column:
+                        name: updated
+                        type: TIMESTAMP WITH TIME ZONE
+                        constraints:
+                          nullable: false
