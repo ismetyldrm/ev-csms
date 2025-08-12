@@ -1,7 +1,9 @@
 package com.evcsms.chargestationserver.service.Impl;
 
 import com.evcsms.chargestationserver.dto.CreateChargeStationDTO;
+import com.evcsms.chargestationserver.dto.UpdateChargePointDTO;
 import com.evcsms.chargestationserver.dto.UpdateChargeStationDTO;
+import com.evcsms.chargestationserver.dto.UpdateConnectorDTO;
 import com.evcsms.chargestationserver.mapper.ChargeStationMapper;
 import com.evcsms.chargestationserver.model.ChargePoint;
 import com.evcsms.chargestationserver.model.ChargeStation;
@@ -35,8 +37,8 @@ public class ChargeStationServiceImpl implements ChargeStationService {
     @Transactional
     public List<CreateChargeStationDTO> updateChargeStation(Long id, UpdateChargeStationDTO dto) {
         ChargeStation chargeStation = chargeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Charge Station with id " + id + " does not exist"));
-        chargeStationMapper.toChargeStation(chargeStation, dto);
 
+        chargeStationMapper.toChargeStation(chargeStation, dto);
         // TODO: Implement the logic to update charge points and connectors
 
         Iterator<ChargePoint> chargePointIterator = chargeStation.getChargePoints().iterator();
@@ -50,14 +52,14 @@ public class ChargeStationServiceImpl implements ChargeStationService {
                                 while (connectorIterator.hasNext()) {
                                     Connector connector = connectorIterator.next();
                                     Optional.ofNullable(chargePointDTO.findConnector(connector.getIndex()))
-                                         .ifPresentOrElse(connectorDTO -> {
-                                                chargeStationMapper.toConnectorForUpdate(connector, connectorDTO);
+                                            .ifPresentOrElse(connectorDTO -> {
+                                                chargeStationMapper.toConnectorForUpdate(connector, (UpdateConnectorDTO) connectorDTO);
                                             }, connectorIterator::remove);
                                 }
                             },
                             chargePointIterator::remove);
         }
-        chargeRepository.save(chargeStation);
+        chargeStation = chargeRepository.saveAndFlush(chargeStation);
         return chargeStationMapper.toDTOList(chargeRepository.findAll());
     }
 
