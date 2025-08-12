@@ -3,10 +3,8 @@ package com.evcsms.chargestationserver.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.proxy.HibernateProxy;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 
 @Getter

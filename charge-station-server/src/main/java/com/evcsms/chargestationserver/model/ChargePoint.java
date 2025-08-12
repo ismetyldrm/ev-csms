@@ -59,4 +59,4 @@ public class ChargePoint {
         return ocppId.hashCode();
     }
 
-}
+}// id, version, created, updated
