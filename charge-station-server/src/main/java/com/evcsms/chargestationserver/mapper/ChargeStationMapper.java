@@ -72,7 +72,6 @@ public abstract class ChargeStationMapper {
 
     public abstract CreateChargeStationDTO toDTO(ChargeStation chargeStation);
 
-
 }
 
 
