@@ -3,6 +3,7 @@ package com.evcsms.chargestationserver.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnTransformer;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,11 +12,11 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "charging_session")
-public class ChargingSession extends TimestampedEntity{
-
+public class ChargingSession extends TimestampedEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
+    @ColumnTransformer(write = "?::charging_session_status")
     private ChargingSessionStatusType status;
 
     @Column(name = "begin_time")
@@ -53,6 +54,7 @@ public class ChargingSession extends TimestampedEntity{
 
     @Enumerated(EnumType.STRING)
     @Column(name = "reason")
+    @ColumnTransformer(write = "?::charging_session_reason")
     private ChargingSessionReasonType reason;
 
     @ManyToOne
