@@ -1,5 +1,6 @@
 package com.evcsms.chargestationserver.dto;
 
+import com.evcsms.chargestationserver.model.ReservationStatusType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,11 +11,11 @@ import java.time.LocalDateTime;
 public class CreateReservationDTO {
 
 
-    private Integer connectorId;
+    private Long connectorId;
 
-    private Integer userId;
+    private Long userId;
 
-    private Integer vehicleId;
+    private Long vehicleId;
 
     private LocalDateTime beginTime;
 
@@ -22,10 +23,6 @@ public class CreateReservationDTO {
 
     private String status;
 
-    private Integer version;
 
-    private LocalDateTime created;
-
-    private LocalDateTime updated;
 
 }
