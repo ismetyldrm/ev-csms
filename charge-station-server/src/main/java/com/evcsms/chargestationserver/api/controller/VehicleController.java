@@ -1,6 +1,7 @@
 package com.evcsms.chargestationserver.api.controller;
 
 import com.evcsms.chargestationserver.dto.CreateVehicleDTO;
+import com.evcsms.chargestationserver.dto.UpdateVehicleDTO;
 import com.evcsms.chargestationserver.service.VehicleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,12 @@ public class VehicleController {
         Long id = vehicleService.createVehicle(dto);
         URI location = URI.create("/api/v1/vehicles/" + id);
         return ResponseEntity.created(location).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable("id") Long id, @Validated @RequestBody UpdateVehicleDTO dto){
+        vehicleService.updateVehicle(id, dto);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
