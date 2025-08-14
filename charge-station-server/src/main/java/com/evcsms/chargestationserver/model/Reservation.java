@@ -3,6 +3,7 @@ package com.evcsms.chargestationserver.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnTransformer;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
@@ -13,9 +14,6 @@ import java.util.Set;
 @Entity
 @Table(name = "reservation")
 public class Reservation extends TimestampedEntity {
-
-    @Column(name = "connector_id")
-    private Integer connectorId;
 
     @Column(name = "user_id")
     private Integer userId;
@@ -28,28 +26,33 @@ public class Reservation extends TimestampedEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private ReservationStatusType status;
+    @ColumnTransformer(write = "?::reservation_status")
+    private ReservationStatusType status = ReservationStatusType.ACTIVE;
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
-    private  Vehicle vehicle;
+    private Vehicle vehicle;
 
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ChargingSession> chargingSessions = new LinkedHashSet<>();
+
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinColumn(name = "connector_id")
+    private Connector connector;
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
         Reservation that = (Reservation) o;
-        return connectorId.equals(that.connectorId) && userId.equals(that.userId) && vehicle.equals(that.vehicle);
+        return userId.equals(that.userId) && beginTime.equals(that.beginTime) && endTime.equals(that.endTime);
     }
 
     @Override
     public int hashCode() {
-        int result = connectorId.hashCode();
-        result = 31 * result + userId.hashCode();
-        result = 31 * result + vehicle.hashCode();
+        int result = userId.hashCode();
+        result = 31 * result + beginTime.hashCode();
+        result = 31 * result + endTime.hashCode();
         return result;
     }
 }
