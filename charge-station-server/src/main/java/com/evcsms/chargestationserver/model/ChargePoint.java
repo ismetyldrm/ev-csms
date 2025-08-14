@@ -3,23 +3,18 @@ package com.evcsms.chargestationserver.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
-import java.util.Objects;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "charge_point")
-public class ChargePoint {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class ChargePoint extends TimestampedEntity {
 
     @Column(name = "ocpp_id")
     private String ocppId;
@@ -45,6 +40,23 @@ public class ChargePoint {
 
     @OneToMany(mappedBy = "chargePoint", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Connector> connectors = new LinkedHashSet<>();
+
+    public void addConnector(Connector connector) {
+        if (connector != null) {
+            connector.setChargePoint(this);
+            connectors.add(connector);
+        }
+    }
+
+    public Optional<Connector> findConnector(Integer index) {
+        return connectors.stream()
+                .filter(connector -> connector.getIndex().equals(index))
+                .findFirst();
+    }
+
+    public void removeIfNotIn(List<Integer> indexList) {
+        this.connectors.removeIf(cp -> !indexList.contains(cp.getIndex()));
+    }
 
     @Override
     public boolean equals(Object o) {
