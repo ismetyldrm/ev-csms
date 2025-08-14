@@ -16,6 +16,4 @@ public class UpdateConnectorDTO {
 
     private BigDecimal powerFactor;
 
-    private String status;
-
 }
