@@ -12,7 +12,7 @@ public interface ChargeStationService {
 
     Long createChargeStation(CreateChargeStationDTO dto);
 
-    List<CreateChargeStationDTO> updateChargeStation(Long id, UpdateChargeStationDTO dto);
+    CreateChargeStationDTO updateChargeStation(Long id, UpdateChargeStationDTO dto);
 
     Page<CreateChargeStationDTO> getAllChargeStations(Pageable pageable);
 
