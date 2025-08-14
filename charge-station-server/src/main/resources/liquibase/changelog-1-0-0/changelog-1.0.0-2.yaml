@@ -8,9 +8,10 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: BIGINT
+                  type: BIGSERIAL
                   constraints:
                     primaryKey: true
+                    nullable: false
               - column:
                   name: charge_station_id
                   type: BIGINT
@@ -41,12 +42,12 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                   name: created
-                   type: TIMESTAMP WITH TIME ZONE
-                   constraints:
-                     nullable: false
+                  name: created
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
               - column:
-                    name: updated
-                    type: TIMESTAMP WITH TIME ZONE
-                    constraints:
-                      nullable: false
+                  name: updated
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false

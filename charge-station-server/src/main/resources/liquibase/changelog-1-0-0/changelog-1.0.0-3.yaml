@@ -18,9 +18,10 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: BIGINT
+                  type: BIGSERIAL
                   constraints:
                     primaryKey: true
+                    nullable: false
               - column:
                   name: charge_point_id
                   type: BIGINT
