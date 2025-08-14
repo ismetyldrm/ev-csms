@@ -2,10 +2,11 @@ package com.evcsms.chargestationserver.mapper;
 
 import com.evcsms.chargestationserver.dto.CreateChargeStationDTO;
 import com.evcsms.chargestationserver.dto.CreateVehicleDTO;
-import com.evcsms.chargestationserver.model.ChargeStation;
+import com.evcsms.chargestationserver.dto.UpdateVehicleDTO;
 import com.evcsms.chargestationserver.model.Vehicle;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -14,20 +15,22 @@ import java.util.List;
 )
 public abstract class VehicleMapper {
 
-
     @Mapping(target = "id",ignore = true)
     @Mapping(target = "version",ignore = true)
     @Mapping(target = "created",ignore = true)
     @Mapping(target = "updated",ignore = true)
     public abstract Vehicle toVehicle(CreateVehicleDTO dto);
 
-
     @Mapping(target = "version",ignore = true)
     @Mapping(target = "created",ignore = true)
     @Mapping(target = "updated",ignore = true)
     public abstract CreateVehicleDTO toCreateVehicleDTO(Vehicle vehicle);
 
-
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "version", ignore = true)
+    @Mapping(target = "created", ignore = true)
+    @Mapping(target = "updated", ignore = true)
+    public abstract void toVehicle(@MappingTarget Vehicle vehicle, UpdateVehicleDTO dto);
 
 
 }
