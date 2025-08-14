@@ -3,6 +3,7 @@ package com.evcsms.chargestationserver.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnTransformer;
 
 import java.math.BigDecimal;
 
@@ -11,18 +12,14 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "connector")
-public class Connector {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class Connector extends TimestampedEntity {
 
     @Column(name = "index")
     private Integer index;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "current_type")
+    @ColumnTransformer(write = "?::connector_current_type")
     private CurrentType currentType;
 
     @Column(name = "power_factor")
@@ -30,8 +27,8 @@ public class Connector {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
+    @ColumnTransformer(write = "?::connector_status")
     private ConnectorStatusType status;
-
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "charge_point_id")
