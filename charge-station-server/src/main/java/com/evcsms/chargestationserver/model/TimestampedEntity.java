@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @MappedSuperclass
-public class TimestampedEntity extends BaseEntity{
+public class TimestampedEntity extends BaseEntity {
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
@@ -22,7 +22,6 @@ public class TimestampedEntity extends BaseEntity{
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updated;
-
 
 
 }
