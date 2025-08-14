@@ -3,6 +3,7 @@ package com.evcsms.chargestationserver.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.math.BigDecimal;
@@ -12,18 +13,15 @@ import java.util.*;
 @Setter
 @Entity
 @Table(name = "charge_station")
-public class ChargeStation {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class ChargeStation extends TimestampedEntity {
 
     @Column(name = "name")
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private String type;
+    @ColumnTransformer(write = "?::charge_station_type")
+    private ChargeStationType type;
 
     @Column(name = "parking_slots")
     private Integer parkingSlots;
@@ -55,6 +53,25 @@ public class ChargeStation {
     @OneToMany(mappedBy = "chargeStation", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ChargePoint> chargePoints = new LinkedHashSet<>();
 
+    public void addChargePoint(ChargePoint chargePoint) {
+        if (chargePoint != null) {
+            chargePoints.add(chargePoint);
+            chargePoint.setChargeStation(this);
+        }
+    }
+
+    public Optional<ChargePoint> findChargePoint(String ocppId) {
+        for (ChargePoint chargePoint : chargePoints) {
+            if (chargePoint.getOcppId().equals(ocppId)) {
+                return Optional.of(chargePoint);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public void removeIfNotIn(List<String> ocppIdList) {
+        this.chargePoints.removeIf(cp -> !ocppIdList.contains(cp.getOcppId()));
+    }
 
     @Override
     public final boolean equals(Object o) {
