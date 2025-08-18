@@ -1,6 +1,5 @@
 package com.evcsms.chargestationserver.dto;
 
-import com.evcsms.chargestationserver.model.ReservationStatusType;
 import lombok.Getter;
 import lombok.Setter;
 
