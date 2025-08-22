@@ -16,13 +16,10 @@ public class UpdateChargePointDTO {
 
     private List<@NotNull UpdateConnectorDTO> connectors;
 
-
     public Object findConnector(Integer index) {
         return connectors.stream()
                 .filter(connector -> connector.getIndex() == index)
                 .findFirst()
                 .orElse(null);
     }
-
-
 }
