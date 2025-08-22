@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_mock_connector_table_2
+      author: ismetyldrm
+      changes:
+        - createTable:
+            tableName: mock_connector
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: mock_charge_point_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_connector_mock_charge_point_id
+                    references: mock_charge_point(id)
+              - column:
+                  name: index
+                  type: INTEGER
+              - column:
+                  name: current_type
+                  type: connector_current_type
+              - column:
+                  name: power_factor
+                  type: DECIMAL(5,2)
+              - column:
+                  name: status
+                  type: connector_status
+              - column:
+                  name: version
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false

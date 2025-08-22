@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_mock_charge_point_table_1
+      author: ismetyldrm
+      changes:
+        - createTable:
+            tableName: mock_charge_point
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+#              - column:
+#                  name: charge_station_id
+#                  type: BIGINT
+#                  constraints:
+#                    foreignKeyName: fk_charge_point_charge_station_id
+#                    references: charge_station(id)
+              - column:
+                  name: ocpp_id
+                  type: VARCHAR(100)
+              - column:
+                  name: disabled
+                  type: BOOLEAN
+              - column:
+                  name: online
+                  type: BOOLEAN
+              - column:
+                  name: last_connected
+                  type: TIMESTAMP
+              - column:
+                  name: last_disconnected
+                  type: TIMESTAMP
+              - column:
+                  name: last_health_checked
+                  type: TIMESTAMP
+              - column:
+                  name: version
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
