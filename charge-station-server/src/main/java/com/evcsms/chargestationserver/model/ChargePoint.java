@@ -34,6 +34,9 @@ public class ChargePoint extends TimestampedEntity {
     @Column(name = "last_health_checked")
     private LocalDateTime lastHealthChecked;
 
+    @OneToOne(mappedBy = "chargePoint", cascade = CascadeType.ALL)
+    private ChargeHardwareSpec hardwareSpec;
+
     @ManyToOne
     @JoinColumn(name = "charge_station_id")
     private ChargeStation chargeStation;
@@ -70,5 +73,4 @@ public class ChargePoint extends TimestampedEntity {
     public int hashCode() {
         return ocppId.hashCode();
     }
-
 }// id, version, created, updated
