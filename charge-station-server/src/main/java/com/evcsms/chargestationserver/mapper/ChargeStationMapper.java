@@ -1,6 +1,7 @@
 package com.evcsms.chargestationserver.mapper;
 
 import com.evcsms.chargestationserver.dto.*;
+import com.evcsms.chargestationserver.model.ChargeHardwareSpec;
 import com.evcsms.chargestationserver.model.ChargePoint;
 import com.evcsms.chargestationserver.model.ChargeStation;
 import com.evcsms.chargestationserver.model.Connector;
@@ -69,6 +70,16 @@ public abstract class ChargeStationMapper {
     public abstract List<CreateChargeStationDTO> toDTOList(List<ChargeStation> chargeStations);
 
     public abstract CreateChargeStationDTO toDTO(ChargeStation chargeStation);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "version", ignore = true)
+    @Mapping(target = "created", ignore = true)
+    @Mapping(target = "updated", ignore = true)
+    @Mapping(target = "chargePoint", ignore = true)
+    public abstract ChargeHardwareSpec toChargeHardwareSpec(CreateChargeHardwareSpecDTO dto);
+
+    @Mapping(source = "chargePoint.id", target = "chargePointId")
+    public abstract CreateChargeHardwareSpecDTO toChargeHardwareSpecDTO(ChargeHardwareSpec entity);
 
 }
 
