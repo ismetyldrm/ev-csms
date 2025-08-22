@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: charge_hardware_spec
+      author: ismetyldrm
+      changes:
+        - createTable:
+            tableName: charge_hardware_spec
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: charge_point_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_hardware_charge_point_id
+                    references: charge_point(id)
+              - column:
+                  name: charge_point_vendor
+                  type: VARCHAR(255)
+              - column:
+                  name: charge_point_model
+                  type: VARCHAR(255)
+              - column:
+                  name: charge_point_serial_number
+                  type: VARCHAR(255)
+              - column:
+                  name: charge_box_serial_number
+                  type: VARCHAR(255)
+              - column:
+                  name: firmware_version
+                  type: VARCHAR(50)
+              - column:
+                  name: iccid
+                  type: VARCHAR(50)
+              - column:
+                  name: imsi
+                  type: VARCHAR(50)
+              - column:
+                  name: meter_type
+                  type: VARCHAR(50)
+              - column:
+                  name: meter_serial_number
+                  type: VARCHAR(255)
+              - column:
+                  name: version
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
